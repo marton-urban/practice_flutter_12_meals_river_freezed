@@ -1,10 +1,14 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../models/meal.dart';
 
-class FavoriteMealsNotifier extends Notifier<List<Meal>> {
+part 'favorites_provider.g.dart';
+
+@Riverpod(keepAlive: true)
+class FavoriteMeals extends _$FavoriteMeals {
   @override
-  List<Meal> build() => [];
+  List<Meal> build() {
+    return [];
+  }
 
   bool toggleMealFavoriteStatus(Meal meal) {
     final mealIsFavorite = state.contains(meal);
@@ -18,7 +22,3 @@ class FavoriteMealsNotifier extends Notifier<List<Meal>> {
     }
   }
 }
-
-final favoriteMealsProvider =
-    NotifierProvider<FavoriteMealsNotifier, List<Meal>>(
-        FavoriteMealsNotifier.new);

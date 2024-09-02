@@ -1,6 +1,8 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../models/meal.dart';
 import 'meals_provider.dart';
+
+part 'filters_provider.g.dart';
 
 enum Filter {
   glutenFree,
@@ -9,14 +11,17 @@ enum Filter {
   vegan,
 }
 
-class FiltersNotifier extends Notifier<Map<Filter, bool>> {
+@Riverpod(keepAlive: true)
+class Filters extends _$Filters {
   @override
-  Map<Filter, bool> build() => {
-        Filter.glutenFree: false,
-        Filter.lactoseFree: false,
-        Filter.vegetarian: false,
-        Filter.vegan: false,
-      };
+  Map<Filter, bool> build() {
+    return {
+      Filter.glutenFree: false,
+      Filter.lactoseFree: false,
+      Filter.vegetarian: false,
+      Filter.vegan: false,
+    };
+  }
 
   void setFilters(Map<Filter, bool> chosenFilters) {
     state = chosenFilters;
@@ -49,6 +54,3 @@ class FiltersNotifier extends Notifier<Map<Filter, bool>> {
     }).toList();
   }
 }
-
-final filtersProvider =
-    NotifierProvider<FiltersNotifier, Map<Filter, bool>>(FiltersNotifier.new);
